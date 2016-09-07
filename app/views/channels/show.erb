@@ -1,0 +1,28 @@
+
+<h1>Channel Profile for <%=@channel.name%> </h1>
+
+<div id:'channel_attributes'>
+<ul>
+  <li>Callsign: <%= @channel.callsign %> </li>
+  <li>Name: <%= @channel.name %> </li> 
+  <li>Price-Per-Month: $<%= @channel.price_per_month%> </li>
+  <li>Total current subscribers: <%= @channel.total_subscribers%> </li>
+
+</ul>
+<%if session[:user_id]%>
+<% @user = User.find(session[:user_id])%>
+	<%if @user.subscribed?(@channel.id) %>
+  		<ul>
+  			<li>	
+			<form action="/users/<%=@user.id%>/channels/<%=@channel.id%>" method="delete">
+			 <input type="submit" value ="Unsubscribe">
+			</form>
+	<%else%>
+	  	<ul>
+	  		<li>	
+			<form action="/users/<%=@user.id%>/channels/<%=@channel.id%>" method="post">
+			<input type="submit" value ="Subscribe">
+			</form> 
+	<%end%>
+<%end%>
+</div>
