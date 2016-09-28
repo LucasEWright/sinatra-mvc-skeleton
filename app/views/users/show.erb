@@ -1,0 +1,43 @@
+
+<h1>Profile</h1>
+
+<h2><%= @user.full_name %></h2>
+
+<div>
+<ul>
+  <p>Your Channels:</p>
+
+  <%@user.channels.all.each do |channel|%>
+
+  <li><a href="/channels/<%=channel.id%>"><%= channel.callsign %> | <%= channel.name %> | $<%= channel.price_per_month%></a></li>
+	<% end %>
+</ul>
+<p>Total monthly cost: $<%= @user.total_monthly_cost%></p>
+</div>
+<div>
+<ul>
+  <p>Manage your account:</p>
+
+  	<%Channel.all.each do |channel|%>
+ 	<%if @user.subscribed?(channel.id) %>
+  	<li><a href="/channels/<%=channel.id%>"><%= channel.callsign %> | <%= channel.name %> | $<%= channel.price_per_month%></a>
+  		<ul>
+  			<li>	
+			<form action="/users/<%=@user.id%>/channels/<%= channel.id%>" method="delete">
+			 <input type="submit" value ="Unsubscribe">
+			</form>
+	<%else%>
+	<li><a href="/channels/<%=channel.id%>"><%= channel.callsign %> | <%= channel.name %> | $<%= channel.price_per_month%></a></li>
+	  	<ul>
+	  		<li>	
+			<form action="/users/<%=@user.id%>/channels/<%=channel.id%>" method="post">
+			<input type="submit" value ="Subscribe">
+			</form> 
+	<%end%>
+	</li>
+  		</ul>
+			</li>
+  				<% end %>
+</div>
+
+<a href="/logout"> Click here to logout.</a>

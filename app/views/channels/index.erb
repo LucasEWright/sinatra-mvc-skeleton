@@ -1,0 +1,10 @@
+<h1>Welcome to the homepage!</h1>
+<h3>The following is a list of avaiable channels:</h3>
+<ul>
+<% @channels.each do |channel| %>
+        <li><a href="/channels/<%=channel.id%>"><%= channel.callsign %> | <%= channel.name %> | $<%= channel.price_per_month%></a></li>
+<% end %>
+</ul>
+
+<p><a href="/login">Are you a member? Please login.</a></p>
+<p><a href='/users/new'>Ready to become a member? Click here to register as a new user.</a></p>
